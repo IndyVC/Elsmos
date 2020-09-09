@@ -1,19 +1,36 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-import { } from "../styles/styling";
-import { TextInput } from 'react-native-gesture-handler';
-
+import React from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+//stylings
+import { inputStyling, colors } from "../styles/styling";
+import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
 const Company = () => {
-    return <View style={styles.container}><TextInput placeholder="Enter company name..." /></View>
-}
+  return (
+    <LinearGradient
+      style={styles.container}
+      colors={[colors.elmos_light, colors.elmos_dark]}
+    >
+      <View style={inputStyling.container}>
+        <TextInput
+          placeholder="Enter company name..."
+          style={inputStyling.input}
+          placeholderTextColor={colors.elmos_light}
+        />
+        <FontAwesome5 name="search" size={24} color={colors.elmos_dark} />
+      </View>
+    </LinearGradient>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "column",
-        justifyContent: "center",
-        height: "100%"
-    }
+  container: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    backgroundColor: "#FFF",
+  },
 });
 
 export default Company;
