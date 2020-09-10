@@ -7,6 +7,7 @@ export const colors = {
   elmos_dark: "#532580",
   elmos_gray: "#F0F0F0",
   white: "#FFF",
+  black: "#4A4A4A"
 };
 
 export const buttonStyling = StyleSheet.create({
@@ -31,11 +32,18 @@ export const inputStyling = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 15,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    position: "relative"
   },
   input: {
     color: colors.elmos_light,
     padding: 15,
+    textAlign: "left",
+    width: "100%",
+    height: "100%"
   },
+  icon: {
+    position: "absolute",
+    right: 15,
+    top: 15
+  }
 });

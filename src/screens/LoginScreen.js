@@ -13,6 +13,7 @@ import { setUsername, setPassword, signIn } from "../slices/user";
 //stylings
 import { inputStyling, buttonStyling, colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Login = ({ navigation }) => {
             value={user.username}
             placeholderTextColor={colors.elmos_light}
           />
+          <FontAwesome5 name="user" size={18} color={colors.elmos_dark} style={inputStyling.icon} />
         </View>
         <View style={[inputStyling.container, { margin: 10 }]}>
           <TextInput
@@ -48,6 +50,7 @@ const Login = ({ navigation }) => {
             value={user.password}
             placeholderTextColor={colors.elmos_light}
           />
+          <FontAwesome5 name="lock" size={18} color={colors.elmos_dark} style={inputStyling.icon} />
         </View>
       </View>
       <TouchableOpacity

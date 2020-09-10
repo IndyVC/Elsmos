@@ -8,15 +8,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 //custom
 import Login from "./src/screens/LoginScreen";
 import Company from "./src/screens/CompanyScreen";
+import Order from "./src/screens/OrderScreen";
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: true }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Company" component={Company} />
+        <Stack.Screen name="Order" component={Order} />
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>
