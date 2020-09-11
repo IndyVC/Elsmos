@@ -16,9 +16,7 @@ const Category = ({ item }) => {
           styles.text,
           {
             backgroundColor:
-              category.selectedCategory === item
-                ? colors.elmos_dark
-                : colors.white,
+              category.selectedCategory === item ? colors.black2 : colors.white,
             color:
               category.selectedCategory === item ? colors.white : colors.black,
           },

@@ -9,6 +9,8 @@ export const colors = {
   white: "#FFF",
   black: "#4A4A4A",
   disabledGray: "rgba(164, 164, 164,0.5)",
+  black2: "#272727",
+  green: "rgb(33,193,116)",
 };
 
 export const buttonStyling = StyleSheet.create({
