@@ -7,7 +7,8 @@ export const colors = {
   elmos_dark: "#532580",
   elmos_gray: "#F0F0F0",
   white: "#FFF",
-  black: "#4A4A4A"
+  black: "#4A4A4A",
+  disabledGray: "rgba(164, 164, 164,0.5)",
 };
 
 export const buttonStyling = StyleSheet.create({
@@ -24,6 +25,12 @@ export const buttonStyling = StyleSheet.create({
     fontWeight: "100",
     textTransform: "uppercase",
   },
+  disabledContainer: {
+    backgroundColor: colors.disabledGray,
+    borderRadius: 10,
+    paddingVertical: 10,
+    width: "50%",
+  },
 });
 
 export const inputStyling = StyleSheet.create({
@@ -32,18 +39,18 @@ export const inputStyling = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 15,
     flexDirection: "row",
-    position: "relative"
+    position: "relative",
   },
   input: {
     color: colors.elmos_light,
     padding: 15,
     textAlign: "left",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   icon: {
     position: "absolute",
     right: 15,
-    top: 15
-  }
+    top: 15,
+  },
 });

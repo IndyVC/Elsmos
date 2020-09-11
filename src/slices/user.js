@@ -1,48 +1,61 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AsyncStorage from '@react-native-community/async-storage';
-
-//SLICE 
+import AsyncStorage from "@react-native-community/async-storage";
+import axios from "axios";
+import { ELSMOS_API } from "../configurations/config";
+//SLICE
 
 const slice = createSlice({
-    name: "user",
-    initialState: {
-        username: "",
-        password: "",
-        loggedIn: false
+  name: "user",
+  initialState: {
+    email: "",
+    password: "",
+    token: "",
+    loggedIn: false,
+  },
+  reducers: {
+    setEmail: (state, action) => {
+      AsyncStorage.setItem("email", action.payload);
+      state.email = action.payload;
     },
-    reducers: {
-        setUsername: (state, action) => {
-            state.username = action.payload;
-        },
-        setPassword: (state, action) => {
-            state.password = action.payload;
-        },
-        loggedIn: (state, action) => {
-            state.loggedIn = action.payload
-        }
-    }
+    setPassword: (state, action) => {
+      AsyncStorage.setItem("password", action.payload);
+      state.password = action.payload;
+    },
+    setToken: (state, action) => {
+      AsyncStorage.setItem("token", action.payload);
+      state.token = action.payload;
+    },
+    loggedIn: (state, action) => {
+      state.loggedIn = action.payload;
+    },
+  },
 });
 
 export default slice.reducer;
 
 //ACTIONS
+export const { setToken, setEmail, setPassword, loggedIn } = slice.actions;
 
-export const { setUsername, setPassword, loggedIn } = slice.actions;
+export const signIn = (login, navigation) => (dispatch) => {
+  axios
+    .post(`${ELSMOS_API}/User/login`, {
+      email: login.email,
+      password: login.password,
+    })
+    .then((res) => {
+      dispatch(setToken(res.data.token));
+      dispatch(setEmail(login.email));
+      dispatch(setPassword(login.password));
+      navigation.navigate("Company");
+    });
+};
 
-// ASYNC CALL 
-
-export const signIn = (userState, navigation) => dispatch => {
-    const { username, password } = userState;
-    if (username == "Indy" && password == "Indy") {
-        dispatch(loggedIn(true));
-        AsyncStorage.setItem("username", username);
-        AsyncStorage.setItem("password", password);
-        AsyncStorage.setItem("token", "token")
-        navigation.navigate("Company");
+export const checkSignedIn = (navigation) => (dispatch) => {
+  AsyncStorage.multiGet(["email", "password"], (err, res) => {
+    const email = res[0][res[0].length - 1];
+    const password = res[1][res[1].length - 1];
+    if (email && password) {
+      dispatch(signIn({ email, password }, navigation));
     }
-    else {
-        dispatch(loggedIn(false));
-        AsyncStorage.setItem("token", "")
-    }
-
-}
+  });
+};

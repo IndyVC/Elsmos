@@ -1,32 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AsyncStorage from '@react-native-community/async-storage';
-
-//SLICE 
+import axios from "axios";
+import { ELSMOS_API } from "../configurations/config";
+//SLICE
 
 const slice = createSlice({
-    name: "company",
-    initialState: {
-        companies: ["Meals on Wheels"],
-        currentCompany: ""
+  name: "company",
+  initialState: {
+    companies: [],
+    selectedCompany: null,
+  },
+  reducers: {
+    setCompanies: (state, action) => {
+      state.companies = action.payload;
     },
-    reducers: {
-        setCompanies: (state, action) => {
-            state.companies = action.payload;
-        },
-        selectCompany: (state, action) => {
-            state.currentCompany = action.payload
-        }
-    }
+    setCompany: (state, action) => {
+      state.selectedCompany = action.payload;
+    },
+  },
 });
 
 export default slice.reducer;
 
 //ACTIONS
+export const { setCompanies, setCompany } = slice.actions;
 
-export const { setCompanies, selectCompany } = slice.actions;
+export const selectCompany = (company, navigation) => (dispatch) => {
+  dispatch(setCompany(company));
+  navigation.navigate("Order");
+};
 
-// ASYNC CALLS 
-export const fetchCompany = (company, navigation) => dispatch => {
-    dispatch(selectCompany(company));
-    navigation.navigate("Order")
-}
+export const fetchCompanies = () => (dispatch) => {
+  axios.get(`${ELSMOS_API}/Company`).then((res) => {
+    dispatch(setCompanies(res.data));
+  });
+};
