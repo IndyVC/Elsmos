@@ -9,7 +9,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import { selectCompany, fetchCompanies } from "../slices/company";
-import ListButton from "../components/ListButton";
+import ListButton from "../components/searchbar/Option";
 //stylings
 import { inputStyling, colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";

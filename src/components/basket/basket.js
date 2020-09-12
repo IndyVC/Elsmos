@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,26 +11,37 @@ import { useSelector } from "react-redux";
 
 const Basket = () => {
   //---Animation---
-  const slide = new Animated.Value(0);
+  const basketAnimationState = useRef(new Animated.Value(0)).current;
 
-  animateBasket = () => {
-    Animated.timing(slide, {
-      toValue: -100,
+  openBasket = () => {
+    Animated.timing(basketAnimationState, {
+      toValue: open ? -100 : 0,
       duration: 500,
       useNativeDriver: true,
     }).start();
   };
+
   //--------------
 
   const order = useSelector((state) => state.order);
+  const [open, setToggle] = useState(false);
 
+  useEffect(() => {
+    if (open) openBasket();
+    else openBasket();
+  }, [open]);
   return (
     <Animated.View
-      style={[styles.basket, { transform: [{ translateY: slide }] }]}
+      style={[
+        styles.basket,
+        {
+          transform: [{ translateY: basketAnimationState }],
+        },
+      ]}
     >
       <TouchableOpacity
         onPress={() => {
-          animateBasket();
+          setToggle(!open);
         }}
       >
         <Text style={styles.basketText}>
@@ -48,7 +59,7 @@ const Basket = () => {
 const styles = StyleSheet.create({
   basket: {
     width: "96%",
-    backgroundColor: colors.black2,
+    backgroundColor: "black",
     paddingVertical: 15,
     borderTopStartRadius: 15,
     borderTopEndRadius: 15,

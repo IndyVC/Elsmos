@@ -3,8 +3,10 @@ import { StyleSheet } from "react-native";
 export const colors = {
   gray: "#F4F5FF",
   darkGray: "#A4A4A4",
-  elmos_light: "#AA1481",
-  elmos_dark: "#532580",
+  elmos_light: "rgba(170, 20, 129,1)",
+  elmos_dark: "rgba(83, 37, 128,1)",
+  elmos_light_t: "rgba(170, 20, 129,0.7)",
+  elmos_dark_t: "rgba(83, 37, 128,0.7)",
   elmos_gray: "#F0F0F0",
   white: "#FFF",
   black: "#4A4A4A",

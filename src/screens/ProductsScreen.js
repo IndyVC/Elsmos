@@ -8,12 +8,10 @@ import Category from "../components/products/Category";
 import Product from "../components/products/Product";
 import Basket from "../components/basket/basket";
 //stylings
-import { inputStyling, colors } from "../styles/styling";
+import { colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native-gesture-handler";
-//animation
 
-const Order = () => {
+const Products = ({ navigation }) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
   const company = useSelector((state) => state.company);
@@ -33,7 +31,7 @@ const Order = () => {
 
   return (
     <LinearGradient
-      colors={[colors.disabledGray, colors.white]}
+      colors={[colors.elmos_dark_t, colors.elmos_light_t]}
       style={{
         height: "100%",
         position: "relative",
@@ -54,7 +52,9 @@ const Order = () => {
           keyExtractor={(item) => {
             return item.title;
           }}
-          renderItem={({ item }) => <Product item={item} />}
+          renderItem={({ item }) => (
+            <Product item={item} navigation={navigation} />
+          )}
           style={styles.products}
           scrollEnabled
           showsHorizontalScrollIndicator={false}
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   categories: {},
 });
 
-export default Order;
+export default Products;

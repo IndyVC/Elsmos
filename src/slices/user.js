@@ -38,7 +38,7 @@ export const { setToken, setEmail, setPassword, loggedIn } = slice.actions;
 
 export const signIn = (login, navigation) => (dispatch) => {
   axios
-    .post(`${ELSMOS_API}/User/login`, {
+    .post(`/User/login`, {
       email: login.email,
       password: login.password,
     })

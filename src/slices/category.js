@@ -29,7 +29,7 @@ export const selectCategory = (category) => (dispatch) => {
 };
 
 export const fetchCategories = (companyId) => (dispatch) => {
-  axios.get(`${ELSMOS_API}/${companyId}/Category`).then((res) => {
+  axios.get(`/${companyId}/Category`).then((res) => {
     dispatch(setCategories(res.data));
     dispatch(setCategory(res.data[0]));
   });

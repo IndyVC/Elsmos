@@ -26,11 +26,11 @@ export const { setCompanies, setCompany } = slice.actions;
 
 export const selectCompany = (company, navigation) => (dispatch) => {
   dispatch(setCompany(company));
-  navigation.navigate("Order");
+  navigation.navigate("Products");
 };
 
 export const fetchCompanies = () => (dispatch) => {
-  axios.get(`${ELSMOS_API}/Company`).then((res) => {
+  axios.get(`/Company`).then((res) => {
     dispatch(setCompanies(res.data));
   });
 };

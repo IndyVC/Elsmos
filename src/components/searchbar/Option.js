@@ -1,8 +1,8 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import { colors } from "../styles/styling";
+import { colors } from "../../styles/styling";
 
-const ListButton = ({ func, item }) => {
+const Option = ({ func, item }) => {
   return (
     <TouchableOpacity onPress={() => func()}>
       <Text style={styles.company}>{item.name}</Text>
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListButton;
+export default Option;

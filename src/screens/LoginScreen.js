@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { validateEmail } from "../utils/utility";
+import axios from "axios";
+import { ELSMOS_API } from "../configurations/config";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, signIn, checkSignedIn } from "../slices/user";
@@ -19,6 +21,7 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [disabledLogin, setDisabledLogin] = useState(true);
+
   useEffect(() => {
     dispatch(checkSignedIn(navigation));
   }, []);
@@ -30,6 +33,12 @@ const Login = ({ navigation }) => {
       setDisabledLogin(true);
     }
   }, [user.email, user.password]);
+
+  useEffect(() => {
+    axios.defaults.baseURL = ELSMOS_API;
+    axios.defaults.headers.common = { Authorization: `Bearer ${user.token}` };
+    console.log("Set axios headers with token: ", user.token);
+  }, [user.token]);
 
   return (
     <LinearGradient
