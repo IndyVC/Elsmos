@@ -8,7 +8,7 @@ const Order = ({ order }) => {
       <View style={styles.container}>
         <Text style={styles.productText}>{order.title}</Text>
         <Text style={[styles.productText, { paddingRight: 20 }]}>
-          € {order.price}
+          € {order.price.toFixed(2)}
         </Text>
       </View>
       <FlatList
@@ -19,7 +19,7 @@ const Order = ({ order }) => {
             <View style={[styles.container]}>
               <Text style={styles.order}>{item.title}</Text>
               <Text style={[styles.order, { paddingRight: 20 }]}>
-                € {item.price}
+                € {item.price.toFixed(2)}
               </Text>
             </View>
           );

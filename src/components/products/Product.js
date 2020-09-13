@@ -7,6 +7,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 //stylings
 import { colors } from "../../styles/styling";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { capitalize } from "../../utils/utility";
 
 const Product = ({ item, navigation }) => {
   const dispatch = useDispatch();

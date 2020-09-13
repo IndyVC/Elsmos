@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ELSMOS_API } from "../configurations/config";
 //SLICE
 
 const slice = createSlice({

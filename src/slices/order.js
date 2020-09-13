@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const slice = createSlice({
   name: "order",
@@ -47,3 +48,10 @@ export const {
   selectProduct,
   confirmProduct,
 } = slice.actions;
+
+export const confirmOrder = (products, companyId) => (dispatch) => {
+  const orders = products.map((p) => {
+    return { productId: p.id, extraIds: p.extras?.map((e) => e.id) };
+  });
+  axios.post(`/${companyId}/Order`, orders).then((res) => console.log(res));
+};
