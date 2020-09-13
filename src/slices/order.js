@@ -4,42 +4,46 @@ const slice = createSlice({
   name: "order",
   initialState: {
     products: [],
+    currentProduct: null,
   },
   reducers: {
     addProduct: (state, action) => {
       if (!state.products.find((p) => p.id == action.payload.id))
         state.products.push(action.payload);
-      else state.products.splice(state.products.indexOf(action.payload), 1);
-    },
-    pushProduct: (state, action) => {
-      if (!state.products.find((p) => p.id == action.payload.id))
-        state.products.push(action.payload);
     },
     addExtra: (state, action) => {
-      const product = action.payload.product;
+      const product = state.currentProduct;
       const extra = action.payload.extra;
-      const existingProduct = state.products.find((p) => p.id == product.id);
       let existingExtra;
-      if (existingProduct.extras) {
-        existingExtra = existingProduct.extras.find((e) => e.id === extra.id);
+      if (product.extras) {
+        existingExtra = product?.extras?.find((e) => e.id === extra.id);
       }
 
-      if (existingProduct && !existingExtra) {
+      if (product && !existingExtra) {
         //product exists
-        if (!existingProduct.extras) {
-          existingProduct.extras = [];
+        if (!product.extras) {
+          product.extras = [];
         }
-        existingProduct.extras.push(extra);
-      } else if (existingProduct && existingExtra) {
-        existingProduct.extras.splice(
-          existingProduct.extras.indexOf(existingExtra),
-          1
-        );
+        product.extras.push(extra);
+      } else if (product && extra) {
+        product.extras.splice(product.extras.indexOf(existingExtra), 1);
       }
+    },
+    selectProduct: (state, action) => {
+      state.currentProduct = action.payload;
+    },
+    confirmProduct: (state) => {
+      state.products.push(state.currentProduct);
+      state.currentProduct = null;
     },
   },
 });
 
 export default slice.reducer;
 
-export const { addProduct, addExtra, pushProduct } = slice.actions;
+export const {
+  addProduct,
+  addExtra,
+  selectProduct,
+  confirmProduct,
+} = slice.actions;

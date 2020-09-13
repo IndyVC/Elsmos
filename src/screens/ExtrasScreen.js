@@ -1,22 +1,36 @@
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet, FlatList } from "react-native";
-import DisplayProduct from "../components/products/DisplayProduct";
-import Extra from "../components/products/Extra";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchExtras } from "../slices/product";
+import { fetchExtraCategories, selectCategory } from "../slices/category";
+//components
+import Category from "../components/products/Category";
+import Basket from "../components/basket/Basket";
+import DisplayProduct from "../components/products/DisplayProduct";
+import Extra from "../components/products/Extra";
 //stylings
 import { colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";
 
-const Extras = ({ route }) => {
+const Extras = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const product = route.params.product;
   const extra = useSelector((state) => state.product);
   const company = useSelector((state) => state.company);
+  const category = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(fetchExtras(company.selectedCompany.id));
+    const compId = company.selectedCompany.id;
+    dispatch(fetchExtraCategories(compId));
   }, []);
+
+  useEffect(() => {
+    if (category.selectedCategory) {
+      dispatch(
+        fetchExtras(company.selectedCompany.id, category.selectedCategory.id)
+      );
+    }
+  }, [category.selectedCategory]);
 
   return (
     <LinearGradient
@@ -26,7 +40,16 @@ const Extras = ({ route }) => {
         position: "relative",
       }}
     >
-      <DisplayProduct item={product} />
+      <FlatList
+        data={category.extraCategories}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Category item={item} />}
+        horizontal
+        scrollEnabled
+        showsHorizontalScrollIndicator={true}
+        style={{ maxHeight: "10%" }}
+      />
+      <DisplayProduct item={product} navigation={navigation} />
       <FlatList
         data={extra.extras}
         keyExtractor={(item) => item.id.toString()}
@@ -34,6 +57,7 @@ const Extras = ({ route }) => {
         style={styles.extras}
         showsVerticalScrollIndicator={false}
       />
+      <Basket />
     </LinearGradient>
   );
 };

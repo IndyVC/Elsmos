@@ -14,20 +14,16 @@ const Product = ({ extra, product }) => {
   return (
     <TouchableOpacity
       style={
-        order.products
-          .find((p) => p.id === product.id)
-          ?.extras?.find((e) => e.id === extra.id)
+        order.currentProduct?.extras?.find((e) => e.id === extra.id)
           ? styles.selectedContainer
           : styles.unselectedContainer
       }
-      onPress={() => dispatch(addExtra({ product, extra }))}
+      onPress={() => dispatch(addExtra({ extra }))}
     >
       <View style={styles.text}>
         <Text
           style={
-            order.products
-              .find((p) => p.id === product.id)
-              ?.extras?.find((e) => e.id === extra.id)
+            order.currentProduct?.extras?.find((e) => e.id === extra.id)
               ? styles.selectedTitle
               : styles.unselectedTitle
           }
@@ -36,9 +32,7 @@ const Product = ({ extra, product }) => {
         </Text>
         <Text
           style={
-            order.products
-              .find((p) => p.id === product.id)
-              ?.extras?.find((e) => e.id === extra.id)
+            order.currentProduct?.extras?.find((e) => e.id === extra.id)
               ? styles.selectedPrice
               : styles.unselectedPrice
           }
@@ -50,9 +44,7 @@ const Product = ({ extra, product }) => {
         name="plus"
         style={styles.icon}
         color={
-          order.products
-            .find((p) => p.id === product.id)
-            ?.extras?.find((e) => e.id === extra.id)
+          order.currentProduct?.extras?.find((e) => e.id === extra.id)
             ? colors.white
             : colors.elmos_dark
         }

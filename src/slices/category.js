@@ -6,14 +6,18 @@ import { ELSMOS_API } from "../configurations/config";
 const slice = createSlice({
   name: "category",
   initialState: {
-    categories: [],
+    productCategories: [],
+    extraCategories: [],
     selectedCategory: null,
   },
   reducers: {
-    setCategories: (state, action) => {
-      state.categories = action.payload;
+    setProductCategories: (state, action) => {
+      state.productCategories = action.payload;
     },
-    setCategory: (state, action) => {
+    setExtraCategories: (state, action) => {
+      state.extraCategories = action.payload;
+    },
+    selectCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
   },
@@ -22,15 +26,20 @@ const slice = createSlice({
 export default slice.reducer;
 
 //ACTIONS
-export const { setCategories, setCategory } = slice.actions;
+export const {
+  setProductCategories,
+  setExtraCategories,
+  selectCategory,
+} = slice.actions;
 
-export const selectCategory = (category) => (dispatch) => {
-  dispatch(setCategory(category));
+export const fetchProductCategories = (companyId) => (dispatch) => {
+  axios.get(`/${companyId}/Category/product`).then((res) => {
+    dispatch(setProductCategories(res.data));
+  });
 };
 
-export const fetchCategories = (companyId) => (dispatch) => {
-  axios.get(`/${companyId}/Category`).then((res) => {
-    dispatch(setCategories(res.data));
-    dispatch(setCategory(res.data[0]));
+export const fetchExtraCategories = (companyId) => (dispatch) => {
+  axios.get(`/${companyId}/Category/extra`).then((res) => {
+    dispatch(setExtraCategories(res.data));
   });
 };

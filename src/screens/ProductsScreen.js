@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, FlatList, Text, View, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCategories } from "../slices/category";
+import { fetchProductCategories, selectCategory } from "../slices/category";
 import { fetchProducts } from "../slices/product";
 //components
 import Category from "../components/products/Category";
 import Product from "../components/products/Product";
-import Basket from "../components/basket/basket";
+import Basket from "../components/basket/Basket";
 //stylings
 import { colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Products = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Products = ({ navigation }) => {
   const category = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(fetchCategories(company.selectedCompany.id));
+    dispatch(fetchProductCategories(company.selectedCompany.id));
   }, []);
 
   useEffect(() => {
@@ -39,13 +40,12 @@ const Products = ({ navigation }) => {
     >
       <View>
         <FlatList
-          data={category.categories}
+          data={category.productCategories}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <Category item={item} />}
           horizontal
-          style={styles.categories}
           scrollEnabled
-          showsHorizontalScrollIndicator={true}
+          showsHorizontalScrollIndicator={false}
         />
         <FlatList
           data={product.products}
@@ -55,9 +55,8 @@ const Products = ({ navigation }) => {
           renderItem={({ item }) => (
             <Product item={item} navigation={navigation} />
           )}
+          scrollEnabled={true}
           style={styles.products}
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
         />
       </View>
       <Basket />
@@ -66,8 +65,10 @@ const Products = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  products: {},
-  categories: {},
+  products: {
+    height: "80%",
+    marginBottom: 10,
+  },
 });
 
 export default Products;

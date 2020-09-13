@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addProduct, pushProduct } from "../../slices/order";
-import GestureRecognizer, {
-  swipeDirections,
-} from "react-native-swipe-gestures";
+import { selectProduct } from "../../slices/order";
+import GestureRecognizer from "react-native-swipe-gestures";
 
 //stylings
 import { colors } from "../../styles/styling";
@@ -17,68 +15,28 @@ const Product = ({ item, navigation }) => {
   return (
     <GestureRecognizer
       onSwipeLeft={() => {
-        dispatch(pushProduct(item));
+        dispatch(selectProduct(item));
         navigation.navigate("Extras", { product: item });
       }}
     >
-      <TouchableOpacity
-        style={
-          order.products.find((p) => p.id == item.id)
-            ? styles.selectedContainer
-            : styles.unselectedContainer
-        }
-        onPress={() => dispatch(addProduct(item))}
-      >
-        <View style={styles.text}>
-          <Text
-            style={
-              order.products.find((p) => p.id == item.id)
-                ? styles.selectedTitle
-                : styles.unselectedTitle
-            }
-          >
-            {item.title}
-          </Text>
-          <Text
-            style={
-              order.products.find((p) => p.id == item.id)
-                ? styles.selectedPrice
-                : styles.unselectedPrice
-            }
-          >
-            € {item.price.toFixed(2)}
-          </Text>
+      <View style={styles.container}>
+        <View style={styles.text} style={styles.text}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.price}>€ {item.price.toFixed(2)}</Text>
         </View>
-        <FontAwesome5
-          name="plus"
-          style={styles.icon}
-          color={
-            order.products.find((p) => p.id == item.id)
-              ? colors.white
-              : colors.elmos_dark
-          }
-        />
-      </TouchableOpacity>
+        <FontAwesome5 name="arrow-right" style={styles.icon} />
+      </View>
     </GestureRecognizer>
   );
 };
 
 const styles = StyleSheet.create({
-  unselectedContainer: {
+  container: {
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 15,
     marginVertical: 5,
     backgroundColor: colors.white,
-    padding: 5,
-    borderRadius: 5,
-  },
-  selectedContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 15,
-    marginVertical: 5,
-    backgroundColor: colors.black2,
     padding: 5,
     borderRadius: 5,
   },
@@ -90,25 +48,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
   },
-  selectedTitle: {
-    color: colors.white,
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  unselectedTitle: {
+  title: {
     color: colors.black,
     fontWeight: "bold",
     fontSize: 18,
   },
-  unselectedPrice: {
+  price: {
     color: colors.black2,
-  },
-  selectedPrice: {
-    color: colors.white,
   },
   icon: {
     fontSize: 24,
-    marginRight: 5,
+    margin: 10,
+    color: colors.black2,
   },
 });
 

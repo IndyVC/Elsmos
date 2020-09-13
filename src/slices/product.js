@@ -31,8 +31,8 @@ export const fetchProducts = (companyId, categoryId) => (dispatch) => {
   });
 };
 
-export const fetchExtras = (companyId) => (dispatch) => {
-  axios.get(`/${companyId}/Extra`).then((res) => {
+export const fetchExtras = (companyId, categoryId) => (dispatch) => {
+  axios.get(`/${companyId}/${categoryId}/Extra`).then((res) => {
     dispatch(setExtras(res.data));
   });
 };

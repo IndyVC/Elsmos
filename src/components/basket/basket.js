@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, Animated, FlatList } from "react-native";
 import { colors } from "../../styles/styling";
 import { useSelector } from "react-redux";
+import GestureRecognizer from "react-native-swipe-gestures";
+import Order from "./Order";
 
 const Basket = () => {
   //---Animation---
@@ -15,7 +11,7 @@ const Basket = () => {
 
   openBasket = () => {
     Animated.timing(basketAnimationState, {
-      toValue: open ? -100 : 0,
+      toValue: open ? -400 : 0,
       duration: 500,
       useNativeDriver: true,
     }).start();
@@ -24,12 +20,28 @@ const Basket = () => {
   //--------------
 
   const order = useSelector((state) => state.order);
-  const [open, setToggle] = useState(false);
+  const category = useSelector((state) => state.category);
+  const [open, setOpen] = useState(false);
+
+  const calculateTotal = () => {
+    let total = 0;
+    order.products?.forEach((p) => {
+      total += Number(p.price);
+      p?.extras?.forEach((e) => {
+        total += Number(e.price);
+      });
+    });
+    return total;
+  };
 
   useEffect(() => {
     if (open) openBasket();
     else openBasket();
   }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [category.selectedCategory]);
   return (
     <Animated.View
       style={[
@@ -39,19 +51,23 @@ const Basket = () => {
         },
       ]}
     >
-      <TouchableOpacity
-        onPress={() => {
-          setToggle(!open);
-        }}
+      <GestureRecognizer
+        onSwipeUp={() => setOpen(true)}
+        onSwipeDown={() => setOpen(false)}
       >
         <Text style={styles.basketText}>
           Total:{" € "}
-          {order.products
-            .map((p) => p.price)
-            .reduce((p, c) => p + c, 0)
-            .toFixed(2)}
+          {calculateTotal().toFixed(2)}
         </Text>
-      </TouchableOpacity>
+        <FlatList
+          style={styles.orders}
+          data={order.products}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => {
+            return <Order order={item} />;
+          }}
+        />
+      </GestureRecognizer>
     </Animated.View>
   );
 };
@@ -66,13 +82,17 @@ const styles = StyleSheet.create({
     marginHorizontal: "2%",
     top: "90%",
     position: "absolute",
-    height: "30%",
+    height: "80%",
   },
   basketText: {
     color: colors.white,
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
+    marginBottom: 20,
+  },
+  orders: {
+    maxHeight: 380,
   },
 });
 

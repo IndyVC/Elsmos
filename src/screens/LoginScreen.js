@@ -37,7 +37,6 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     axios.defaults.baseURL = ELSMOS_API;
     axios.defaults.headers.common = { Authorization: `Bearer ${user.token}` };
-    console.log("Set axios headers with token: ", user.token);
   }, [user.token]);
 
   return (
