@@ -3,6 +3,7 @@ import { StyleSheet, FlatList, Text, View, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductCategories, selectCategory } from "../slices/category";
 import { fetchProducts } from "../slices/product";
+
 //components
 import Category from "../components/products/Category";
 import Product from "../components/products/Product";

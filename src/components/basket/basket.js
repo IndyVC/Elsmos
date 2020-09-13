@@ -4,6 +4,7 @@ import { colors } from "../../styles/styling";
 import { useSelector } from "react-redux";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Order from "./Order";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const Basket = () => {
   //---Animation---
@@ -55,18 +56,20 @@ const Basket = () => {
         onSwipeUp={() => setOpen(true)}
         onSwipeDown={() => setOpen(false)}
       >
-        <Text style={styles.basketText}>
-          Total:{" € "}
-          {calculateTotal().toFixed(2)}
-        </Text>
-        <FlatList
-          style={styles.orders}
-          data={order.products}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => {
-            return <Order order={item} />;
-          }}
-        />
+        <TouchableWithoutFeedback onPress={() => setOpen(!open)}>
+          <Text style={styles.basketText}>
+            Total:{" € "}
+            {calculateTotal().toFixed(2)}
+          </Text>
+          <FlatList
+            style={styles.orders}
+            data={order.products}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => {
+              return <Order order={item} />;
+            }}
+          />
+        </TouchableWithoutFeedback>
       </GestureRecognizer>
     </Animated.View>
   );
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   orders: {
     maxHeight: 380,

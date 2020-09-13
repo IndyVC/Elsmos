@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProduct } from "../../slices/order";
@@ -10,11 +10,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 const Product = ({ item, navigation }) => {
   const dispatch = useDispatch();
-  const order = useSelector((state) => state.order);
 
   return (
-    <GestureRecognizer
-      onSwipeLeft={() => {
+    <TouchableOpacity
+      onPress={() => {
         dispatch(selectProduct(item));
         navigation.navigate("Extras", { product: item });
       }}
@@ -26,7 +25,7 @@ const Product = ({ item, navigation }) => {
         </View>
         <FontAwesome5 name="arrow-right" style={styles.icon} />
       </View>
-    </GestureRecognizer>
+    </TouchableOpacity>
   );
 };
 
