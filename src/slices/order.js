@@ -50,8 +50,11 @@ export const {
 } = slice.actions;
 
 export const confirmOrder = (products, companyId) => (dispatch) => {
-  const orders = products.map((p) => {
-    return { productId: p.id, extraIds: p.extras?.map((e) => e.id) };
-  });
-  axios.post(`/${companyId}/Order`, orders).then((res) => console.log(res));
+  const orders = {
+    companyId: companyId,
+    lines: products.map((p) => {
+      return { productId: p.id, toppings: p.extras?.map((e) => e.id) };
+    }),
+  };
+  axios.post(`/api/companies/${companyId}/Orders`, orders);
 };

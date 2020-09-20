@@ -5,7 +5,7 @@ import { colors } from "../../styles/styling";
 const Option = ({ func, item }) => {
   return (
     <TouchableOpacity onPress={() => func()}>
-      <Text style={styles.company}>{item.name}</Text>
+      <Text style={styles.company}>{item.title}</Text>
     </TouchableOpacity>
   );
 };

@@ -38,7 +38,7 @@ export const { setToken, setEmail, setPassword, loggedIn } = slice.actions;
 
 export const signIn = (login, navigation) => (dispatch) => {
   axios
-    .post(`/User/login`, {
+    .post(`/api/token/login`, {
       email: login.email,
       password: login.password,
     })

@@ -26,13 +26,17 @@ export default slice.reducer;
 export const { setProducts, setExtras } = slice.actions;
 
 export const fetchProducts = (companyId, categoryId) => (dispatch) => {
-  axios.get(`/${companyId}/${categoryId}/Product`).then((res) => {
-    dispatch(setProducts(res.data));
-  });
+  axios
+    .get(`/api/companies/${companyId}/products/categories/${categoryId}`)
+    .then((res) => {
+      dispatch(setProducts(res.data));
+    });
 };
 
 export const fetchExtras = (companyId, categoryId) => (dispatch) => {
-  axios.get(`/${companyId}/${categoryId}/Extra`).then((res) => {
-    dispatch(setExtras(res.data));
-  });
+  axios
+    .get(`/api/companies/${companyId}/toppings/categories/${categoryId}`)
+    .then((res) => {
+      dispatch(setExtras(res.data));
+    });
 };

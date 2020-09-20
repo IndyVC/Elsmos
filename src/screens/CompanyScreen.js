@@ -48,7 +48,7 @@ const Company = ({ navigation }) => {
       <View style={styles.suggestions}>
         <FlatList
           data={company.companies.filter((c) => {
-            return c.name.includes(companyInput) || companyInput === "";
+            return c.title.includes(companyInput) || companyInput === "";
           })}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => {

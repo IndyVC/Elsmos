@@ -32,13 +32,13 @@ export const {
 } = slice.actions;
 
 export const fetchProductCategories = (companyId) => (dispatch) => {
-  axios.get(`/${companyId}/Category/product`).then((res) => {
+  axios.get(`/api/companies/${companyId}/categories/product`).then((res) => {
     dispatch(setProductCategories(res.data));
   });
 };
 
 export const fetchExtraCategories = (companyId) => (dispatch) => {
-  axios.get(`/${companyId}/Category/extra`).then((res) => {
+  axios.get(`/api/companies/${companyId}/categories/topping`).then((res) => {
     dispatch(setExtraCategories(res.data));
   });
 };

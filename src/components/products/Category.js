@@ -22,7 +22,7 @@ const Category = ({ item }) => {
           },
         ]}
       >
-        {capitalize(item.name)}
+        {capitalize(item.title)}
       </Text>
     </TouchableOpacity>
   );

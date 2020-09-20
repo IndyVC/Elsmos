@@ -30,7 +30,7 @@ export const selectCompany = (company, navigation) => (dispatch) => {
 };
 
 export const fetchCompanies = () => (dispatch) => {
-  axios.get(`/Company`).then((res) => {
+  axios.get(`/api/companies`).then((res) => {
     dispatch(setCompanies(res.data));
   });
 };
