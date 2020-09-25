@@ -27,16 +27,33 @@ export const { setProducts, setExtras } = slice.actions;
 
 export const fetchProducts = (companyId, categoryId) => (dispatch) => {
   axios
-    .get(`/api/companies/${companyId}/products/categories/${categoryId}`)
+    .get(`/companies/${companyId}/products/categories/${categoryId}`)
     .then((res) => {
       dispatch(setProducts(res.data));
-    });
+    }).catch(err => {
+      const status = err.response.status;
+      switch (status) {
+        case 500:
+          alert("Account does not exist");
+          break;
+        default:
+          alert("Check your network connection");
+          break;
+      }
+    })
 };
 
 export const fetchExtras = (companyId, categoryId) => (dispatch) => {
   axios
-    .get(`/api/companies/${companyId}/toppings/categories/${categoryId}`)
+    .get(`/companies/${companyId}/toppings/categories/${categoryId}`)
     .then((res) => {
       dispatch(setExtras(res.data));
-    });
+    }).catch(err => {
+      const status = err.response.status;
+      switch (status) {
+        default:
+          alert("Check your network connection");
+          break;
+      }
+    })
 };

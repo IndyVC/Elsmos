@@ -32,13 +32,27 @@ export const {
 } = slice.actions;
 
 export const fetchProductCategories = (companyId) => (dispatch) => {
-  axios.get(`/api/companies/${companyId}/categories/product`).then((res) => {
+  axios.get(`/companies/${companyId}/categories/product`).then((res) => {
     dispatch(setProductCategories(res.data));
-  });
+  }).catch(err => {
+    const status = err.response.status;
+    switch (status) {
+      default:
+        alert("Check your network connection");
+        break;
+    }
+  })
 };
 
 export const fetchExtraCategories = (companyId) => (dispatch) => {
-  axios.get(`/api/companies/${companyId}/categories/topping`).then((res) => {
+  axios.get(`/companies/${companyId}/categories/topping`).then((res) => {
     dispatch(setExtraCategories(res.data));
-  });
+  }).catch(err => {
+    const status = err.response.status;
+    switch (status) {
+      default:
+        alert("Check your network connection");
+        break;
+    }
+  })
 };

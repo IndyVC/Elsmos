@@ -30,7 +30,14 @@ export const selectCompany = (company, navigation) => (dispatch) => {
 };
 
 export const fetchCompanies = () => (dispatch) => {
-  axios.get(`/api/companies`).then((res) => {
+  axios.get(`/companies`).then((res) => {
     dispatch(setCompanies(res.data));
-  });
+  }).catch(err => {
+    const status = err.response.status;
+    switch (status) {
+      default:
+        alert("Check your network connection");
+        break;
+    }
+  })
 };

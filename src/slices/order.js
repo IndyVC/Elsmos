@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setProducts } from "./product";
 
 const slice = createSlice({
   name: "order",
   initialState: {
     products: [],
     currentProduct: null,
+    myOrders: []
   },
   reducers: {
+    setMyOrders(state, action) {
+      state.myOrders = action.payload;
+    },
+    clearProducts(state, action) {
+      state.products = [];
+    },
     addProduct: (state, action) => {
       if (!state.products.find((p) => p.id == action.payload.id))
         state.products.push(action.payload);
@@ -47,7 +55,28 @@ export const {
   addExtra,
   selectProduct,
   confirmProduct,
+  clearProducts,
+  setMyOrders
 } = slice.actions;
+
+export const fetchMyOrders = () => dispatch => {
+  axios.get(`/companies/Orders/User`).then(res => {
+    dispatch(setMyOrders(res.data));
+  }).catch(err => {
+    switch (status) {
+      default:
+        alert("Check your network connection");
+        break;
+    }
+  })
+}
+
+export const deleteOrders = (id) => dispatch => {
+  console.log(id);
+  axios.delete(`/companies/Orders/${id}`).then(() => {
+    dispatch(fetchMyOrders());
+  })
+}
 
 export const confirmOrder = (products, companyId) => (dispatch) => {
   const orders = {
@@ -56,5 +85,13 @@ export const confirmOrder = (products, companyId) => (dispatch) => {
       return { productId: p.id, toppings: p.extras?.map((e) => e.id) };
     }),
   };
-  axios.post(`/api/companies/${companyId}/Orders`, orders);
+  axios.post(`/companies/Orders`, orders).then(res => {
+    dispatch(clearProducts());
+  }).catch(err => {
+    switch (status) {
+      default:
+        alert("Check your network connection");
+        break;
+    }
+  })
 };

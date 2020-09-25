@@ -38,7 +38,7 @@ export const { setToken, setEmail, setPassword, loggedIn } = slice.actions;
 
 export const signIn = (login, navigation) => (dispatch) => {
   axios
-    .post(`/api/token/login`, {
+    .post(`/token/login`, {
       email: login.email,
       password: login.password,
     })
@@ -47,7 +47,17 @@ export const signIn = (login, navigation) => (dispatch) => {
       dispatch(setEmail(login.email));
       dispatch(setPassword(login.password));
       navigation.navigate("Company");
-    });
+    }).catch(err => {
+      const status = err.response.status;
+      switch (status) {
+        case 500:
+          alert("Account does not exist");
+          break;
+        default:
+          alert("Check your network connection");
+          break;
+      }
+    })
 };
 
 export const checkSignedIn = (navigation) => (dispatch) => {
@@ -55,7 +65,8 @@ export const checkSignedIn = (navigation) => (dispatch) => {
     const email = res[0][res[0].length - 1];
     const password = res[1][res[1].length - 1];
     if (email && password) {
-      dispatch(signIn({ email, password }, navigation));
+      dispatch(setEmail(email));
+      dispatch(setPassword(password));
     }
   });
 };

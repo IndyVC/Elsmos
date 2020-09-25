@@ -44,8 +44,7 @@ const Basket = () => {
   };
 
   useEffect(() => {
-    if (open) openBasket();
-    else openBasket();
+    openBasket();
   }, [open]);
 
   useEffect(() => {
@@ -83,8 +82,10 @@ const Basket = () => {
       />
       <TouchableOpacity
         style={styles.confirmBtn}
-        onPress={() =>
-          dispatch(confirmOrder(order.products, company.selectedCompany.id))
+        onPress={() => {
+          dispatch(confirmOrder(order.products, company.selectedCompany.id));
+          setOpen(false);
+        }
         }
       >
         <Text style={styles.confirm}>Confirm order</Text>
@@ -114,7 +115,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   orders: {
-    height: 350,
+    maxHeight: 350
+
   },
   confirmBtn: {
     height: 40,

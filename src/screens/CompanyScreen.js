@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import { selectCompany, fetchCompanies } from "../slices/company";
 import ListButton from "../components/searchbar/Option";
+import MyOrders from "../screens/MyOrdersScreen";
 //stylings
 import { inputStyling, colors } from "../styles/styling";
 import { LinearGradient } from "expo-linear-gradient";
@@ -57,6 +58,11 @@ const Company = ({ navigation }) => {
           }}
         ></FlatList>
       </View>
+      <TouchableOpacity style={styles.btn} onPress={() => {
+        navigation.navigate("Orders")
+      }}>
+        <Text style={styles.txt}>My orders</Text>
+      </TouchableOpacity>
     </LinearGradient>
   );
 };
@@ -77,6 +83,24 @@ const styles = StyleSheet.create({
     marginTop: -12,
     backgroundColor: colors.gray,
   },
+  myOrders: {
+    width: "80%"
+  },
+  btn: {
+    width: "80%",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+  },
+  txt: {
+    color: colors.elmos_dark,
+    fontSize: 16
+  }
 });
 
 export default Company;

@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, Button } from "react-native";
 import { Provider } from "react-redux";
 import store from "./src/store/store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,6 +10,7 @@ import Login from "./src/screens/LoginScreen";
 import Company from "./src/screens/CompanyScreen";
 import Products from "./src/screens/ProductsScreen";
 import Extras from "./src/screens/ExtrasScreen";
+import MyOrders from "./src/screens/MyOrdersScreen";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const App = () => {
           <Stack.Screen name="Company" component={Company} />
           <Stack.Screen name="Products" component={Products} />
           <Stack.Screen name="Extras" component={Extras} />
+          <Stack.Screen name="Orders" component={MyOrders} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
